@@ -28,7 +28,7 @@ export default elasticsSarchClient => {
         this.body = 'test'
     })
 
-    router.post('/thread', function*(next) {
+    router.post('/threads', function*(next) {
 
         const body = yield parse(this)
 
