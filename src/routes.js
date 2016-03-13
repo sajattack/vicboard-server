@@ -1,5 +1,6 @@
 import koaRouter from 'koa-router'
 import koaBody from 'koa-body'
+import { v4 as uuid } from 'node-uuid'
 
 const router = koaRouter()
 
@@ -29,18 +30,19 @@ export default elasticsSarchClient => {
         })
     })
 
-    router.get('/thread', function*(next) {
-        this.body = yield elasticsSarchClient.count({
-            index: config.appname
-        })
-    })
-
     router.post('/thread', koaBody, function*(next) {
-        const { username = 'annon', text = '', catagory = 'issues', cords = [null, null], image = 'https://www.dinafem.org/static/images/site/no-photo.jpg' } = this.request.body
+        const { username = 'annon', text = '', catagory = 'issue', cords = [null, null], image = 'https://www.dinafem.org/static/images/site/no-photo.jpg' } = this.request.body
 
 
+        const parms = {
+            cords,
+            text,
+            image,
+            test,
+            username
+        }
 
-
+        yield elasticsSarchClient.saveThread(catagory, uuid(), parms)
     })
 
 

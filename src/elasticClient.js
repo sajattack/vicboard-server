@@ -51,17 +51,22 @@ export default class elasticSearchAbstraction extends elasticClient {
         }))
     }
 
+
     /* Comments */
 
-    getComments(threadID) {
-
-
-
-    }
-
-    saveComment(threadID, comment) {
+    saveComment(threadID, thread, comment) {
         return new Promise((resolve, reject) => {
-
+            this.update({
+                index: 'thread',
+                type: thread.type,
+                id: thread.id,
+                body: {
+                    script: 'ctx._source.comments += comment',
+                    params: { comment }
+                }
+            }, (error, response) => {
+                console.log(error, response)
+            });
         })
     }
 }
