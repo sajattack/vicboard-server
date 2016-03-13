@@ -4,8 +4,18 @@ import koaBody from 'koa-body'
 const router = koaRouter()
 
 
-export default function(elasticsSarchClient) {
-	/* index */
+const threadTemplate = {
+    title: 'Awesome Thread',
+    image: 'imgur url', //generated from within render code
+    text: '...',
+    cords: [123, 271], //lang , long
+    username: 'optional' //defaults to annon
+
+}
+
+
+export default elasticsSarchClient => {
+    /* index */
 
     router.get('/', function*(next) {
         this.body = 'Your drunk. Go home.'
@@ -26,7 +36,7 @@ export default function(elasticsSarchClient) {
     })
 
     router.post('/thread', koaBody, function*(next) {
-        const { user, text, catagory, cords, image } = this.request.body
+        const { username = 'annon', text = '', catagory = 'issues', cords = [null, null], image = 'https://www.dinafem.org/static/images/site/no-photo.jpg' } = this.request.body
 
 
 
@@ -42,8 +52,6 @@ export default function(elasticsSarchClient) {
 
 
     })
-
-
 
     return router
 }

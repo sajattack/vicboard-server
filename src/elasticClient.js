@@ -10,11 +10,7 @@ export default class elasticSearchAbstraction extends elasticClient {
         this.check()
             .then(() => {
                 console.log(`Established Connection to ElasticSearch @ ${host}`)
-
-
                 this.initIndexs()
-
-
             })
             .catch(error => console.error(`Elastic Search is DOWNNNNNNN`, error))
     }
@@ -24,8 +20,28 @@ export default class elasticSearchAbstraction extends elasticClient {
         hello: "elasticsearch"
     }, error => error ? reject(error) : resolve()));
 
-    getThread(id, type) {
+    initIndexs = (overwrite = false) => {
+        const indices = ['thread', 'comments']
 
+        indices.forEach(index => {
+            this.indices.exists({ index }, (err, exsist) => {
+                if (!exsist) {
+                    this.indices.create({ index })
+                } else if (overwrite) {
+                    this.indices.delete({ index }, () => this.indices.create({ index }))
+                }
+            })
+        })
+    };
+
+
+    /*Threads*/
+
+    getThreads(id, type) {
+
+    }
+
+    getThread(id, type) {
         this.get({
             index: 'thread',
             type,
@@ -34,22 +50,23 @@ export default class elasticSearchAbstraction extends elasticClient {
             console.log(error, response)
 
         })
+    }
+
+    saveThread(thread) {
+
+    }
+
+    /* Comments */
+
+    getComments(threadID) {
+
 
 
     }
 
-
-    initIndexs = (overwrite = false) => {
-        const indexs = ['thread', 'comments']
-
-        indexs.forEach(index => {
-            console.log(index)
-            this.indices.exists({}, (err, exsists) => {
-
-            })
-
-        })
+    saveComment(comment) {
 
 
-    };
+    }
+
 }
