@@ -56,11 +56,13 @@ export default elasticsSarchClient => {
 
         const { username = 'anonymous', title = '', text = '', emoji = '😄', cords = [null, null], images = [] } = body
         const emoji_string = emojis(emoji)
+        const id = uuid()
+
 
         this.body = yield elasticsSarchClient.create({
             index: 'thread',
             type: emoji_string,
-            id: uuid(),
+            id,
             body: {
                 username,
                 title,
