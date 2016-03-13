@@ -58,7 +58,7 @@ export default elasticsSarchClient => {
 
         const body = yield parse(this)
 
-        const { username = 'anonymous', title = '', text = '', emoji = '😄', cords = [null, null], images = [] } = body
+        const { username = 'anonymous', title = '', time = null,  text = '', emoji = '😄', cords = [null, null], images = [] } = body
         const emoji_string = emojis(emoji)
         const id = uuid()
 
@@ -74,6 +74,7 @@ export default elasticsSarchClient => {
             id,
             body: {
                 username,
+                time,
                 title,
                 text,
                 id,
