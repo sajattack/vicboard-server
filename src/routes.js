@@ -61,6 +61,11 @@ export default elasticsSarchClient => {
         const emoji_string = emojis(emoji)
         const id = uuid()
 
+        
+        this.set('Access-Control-Allow-Origin', '*')
+        this.set('Access-Control-Allow-Methods', 'GET')
+        this.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+
 
         this.body = yield elasticsSarchClient.create({
             index: 'thread',
