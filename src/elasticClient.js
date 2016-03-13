@@ -12,6 +12,11 @@ export default class elasticSearchAbstraction extends elasticClient {
         this.initIndexs(false)
     }
 
+    check = () => this.ping({
+        requestTimeout: 30000,
+        hello: "elasticsearch"
+    }, error => error ? console.error('elasticsearch cluster is down!') : console.log('All is well'));
+
     initIndexs = (overwrite = false) => {
         const indexs = ['users', 'threads', 'comments', ]
 
