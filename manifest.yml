@@ -1,0 +1,9 @@
+applications:
+- path: .
+  memory: 1024M
+  disk_quota: 4096M 
+  instances: 1
+  domain: mybluemix.net
+  name: vicboard-server 
+  host: vicboard-server
+  disk_quota: 1024M
