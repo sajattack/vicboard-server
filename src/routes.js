@@ -1,9 +1,8 @@
 import koaRouter from 'koa-router'
-import koaBody from 'koa-body'
+import parse from 'co-body'
 import { v4 as uuid } from 'node-uuid'
 
 const router = koaRouter()
-const bodyParser = koaBody()
 
 const threadTemplate = {
     title: 'Awesome Thread',
@@ -29,40 +28,34 @@ export default elasticsSarchClient => {
         this.body = 'test'
     })
 
-    router.post('/thread', bodyParser, function*(next) {
+    router.post('/thread', function*(next) {
+
+        const body = yield parse(this)
+
+        const { username = 'anonymous', title = '', text = '', emoji = 'issue', cords = [null, null], images = [] } = body
 
 
-        return this.body = JSON.stringify(this)
-
-
-        const { username = 'anonymous', title = '', text = '', emoji = 'issue', cords = [null, null], images = [] } = this.request.body
-
-        const id = uuid()
-
-        const parms = {
-            comments: [],
-            cords,
-            text,
-            emoji,
-            images,
-            title,
-            username
-        }
-
-        elasticsSarchClient.saveThread(parms, id)
-            .then(() => {
-                this.body = JSON.stringify({
-                    status: 'ok',
-                    id
-                })
-            })
+        this.body = yield elasticsSarchClient.create({
+            index: 'thread',
+            type: emoji,
+            id: uuid(),
+            body: {
+                username,
+                title,
+                text,
+                emoji,
+                cords,
+                images,
+                comments: []
+            }
+        })
     })
 
 
 
     /* Comments */
 
-    router.post('/comment', koaBody, function*(next) {
+    router.post('/comment', function*(next) {
         const { user, comment, threadID } = this.request.body
 
 

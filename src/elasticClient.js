@@ -3,7 +3,7 @@ import config from './config'
 
 const host = config.elasticsearch.host //`http://${config.elasticsearch.username}:${config.elasticsearch.password}@${config.elasticsearch.host}`
 
-export default class elasticSearchAbstraction extends elasticClient {
+export default class extends elasticClient {
     constructor() {
         super({ host })
 
@@ -31,43 +31,4 @@ export default class elasticSearchAbstraction extends elasticClient {
             }
         }))
     };
-
-
-    /*Threads*/
-
-    getThreads(id, type) {
-
-    }
-
-    saveThread({ type, id, body }) {
-        return new Promise((resolve, reject) => this.create({
-            index: 'thread',
-            type,
-            id,
-            body
-        }, (error, response) => {
-            if (error) return reject(error)
-                
-            resolve()
-        }))
-    }
-
-
-    /* Comments */
-
-    saveComment(threadID, thread, comment) {
-        return new Promise((resolve, reject) => {
-            this.update({
-                index: 'thread',
-                type: thread.type,
-                id: thread.id,
-                body: {
-                    script: 'ctx._source.comments += comment',
-                    params: { comment }
-                }
-            }, (error, response) => {
-                console.log(error, response)
-            });
-        })
-    }
 }

@@ -1,5 +1,4 @@
 import koa from 'koa'
-import servceStatic from 'koa-static'
 import cors from 'koa-cors'
 
 import config from './config'
@@ -11,7 +10,6 @@ const elasticsSarchClient = new elasticClient()
 const router = routes(elasticsSarchClient)
 
 /* set usage parms */
-app.use(servceStatic(__dirname + '/public'))
 app.use(cors())
 
 /*load in routes */
