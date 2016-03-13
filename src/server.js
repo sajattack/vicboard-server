@@ -19,4 +19,4 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 /* START THE MOTHER FUCKER */
-app.listen(config.koa.port, () => console.log(`Server cooking at localhost:${config.koa.port}`))
+app.listen(appEnv.port, '0.0.0.0', () => console.log(`Server cooking at localhost:${config.koa.port}`))
