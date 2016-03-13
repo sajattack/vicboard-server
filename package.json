@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "babel": "babel ./src --out-dir ./dist",
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "bin": {
     "babel-node": "./node_modules/.bin/babel-node"
