@@ -25,7 +25,18 @@ export default elasticsSarchClient => {
 
     router.get('/threads', function*(next) {
 
-        this.body = 'test'
+        const query = this.query
+
+        this.body = yield elasticsSarchClient.search({
+            index: 'thread',
+            body: {
+                query: {
+                    match: {
+                        ...query
+                    }
+                }
+            }
+        })
     })
 
     router.post('/threads', function*(next) {
@@ -55,7 +66,7 @@ export default elasticsSarchClient => {
     /* Comments */
 
     router.post('/comment', function*(next) {
-        const { user, comment, threadID } = this.request.body
+        const body = yield parse(this)
 
 
     })

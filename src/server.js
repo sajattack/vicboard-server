@@ -1,11 +1,13 @@
 import koa from 'koa'
 import cors from 'koa-cors'
+import qs from 'koa-qs'
 
 import config from './config'
 import routes from './routes'
 import elasticClient from './elasticClient'
 
 const app = koa()
+qs(app)
 const elasticsSarchClient = new elasticClient()
 const router = routes(elasticsSarchClient)
 
