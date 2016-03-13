@@ -34,7 +34,6 @@ export default elasticsSarchClient => {
 
         const { username = 'anonymous', title = '', text = '', emoji = 'issue', cords = [null, null], images = [] } = body
 
-
         this.body = yield elasticsSarchClient.create({
             index: 'thread',
             type: emoji,
