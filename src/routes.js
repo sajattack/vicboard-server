@@ -1,6 +1,7 @@
 import koaRouter from 'koa-router'
 import parse from 'co-body'
 import { v4 as uuid } from 'node-uuid'
+import emojis from './emojiUtil'
 
 const router = koaRouter()
 
@@ -25,7 +26,7 @@ export default elasticsSarchClient => {
 
     router.get('/threads', function*(next) {
 
-        const query = this.query
+        let query = this.query
 
 
         if (Object.keys(query).length === 0) {
@@ -36,6 +37,8 @@ export default elasticsSarchClient => {
             })
         }
 
+        if (query.emoji)
+            query.emoji = emojis(query.emoji)
 
         this.body = yield elasticsSarchClient.search({
             index: 'thread',
@@ -51,16 +54,19 @@ export default elasticsSarchClient => {
 
         const body = yield parse(this)
 
-        const { username = 'anonymous', title = '', text = '', emoji = 'issue', cords = [null, null], images = [] } = body
+        const { username = 'anonymous', title = '', text = '', emoji = '😄', cords = [null, null], images = [] } = body
+        const emoji_string = emojis(emoji)
 
         this.body = yield elasticsSarchClient.create({
             index: 'thread',
-            type: emoji,
+            type: emoji_string,
             id: uuid(),
             body: {
                 username,
                 title,
                 text,
+                id,
+                emoji_string,
                 emoji,
                 cords,
                 images,
