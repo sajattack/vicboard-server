@@ -3,22 +3,30 @@ import config from './config'
 
 const host = config.elasticsearch.host //`http://${config.elasticsearch.username}:${config.elasticsearch.password}@${config.elasticsearch.host}`
 
-console.log(elasticClient)
-
 export default class elasticSearchAbstraction extends elasticClient {
     constructor() {
         super({ host })
 
-        this.initIndexs(false)
+        this.check()
+            .then(() => {
+                console.log(`Established Connection to ElasticSearch @ ${host}`)
+
+
+                this.initIndexs()
+
+
+            })
+            .catch(error => console.error(`Elastic Search is DOWNNNNNNN`, error))
     }
 
-    check = () => this.ping({
+    check = () => new Promise((resolve, reject) => this.ping({
         requestTimeout: 30000,
         hello: "elasticsearch"
-    }, error => error ? console.error('elasticsearch cluster is down!') : console.log('All is well'));
+    }, error => error ? reject(error) : resolve()));
+
 
     initIndexs = (overwrite = false) => {
-        const indexs = ['users', 'threads', 'comments', ]
+        const indexs = ['users', 'threads', 'comments']
 
     };
 }
