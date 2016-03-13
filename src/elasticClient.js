@@ -24,9 +24,32 @@ export default class elasticSearchAbstraction extends elasticClient {
         hello: "elasticsearch"
     }, error => error ? reject(error) : resolve()));
 
+    getThread(id, type) {
+
+        this.get({
+            index: 'thread',
+            type,
+            id
+        }, (error, response) => {
+            console.log(error, response)
+
+        })
+
+
+    }
+
 
     initIndexs = (overwrite = false) => {
-        const indexs = ['users', 'threads', 'comments']
+        const indexs = ['thread', 'comments']
+
+        indexs.forEach(index => {
+            console.log(index)
+            this.indices.exists({}, (err, exsists) => {
+
+            })
+
+        })
+
 
     };
 }
