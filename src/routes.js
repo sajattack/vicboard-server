@@ -27,13 +27,21 @@ export default elasticsSarchClient => {
 
         const query = this.query
 
+
+        if (Object.keys(query).length === 0) {
+            console.log('wildcard!')
+            return this.body = yield elasticsSarchClient.search({
+                index: 'thread',
+                q: '*:*'
+            })
+        }
+
+
         this.body = yield elasticsSarchClient.search({
             index: 'thread',
             body: {
                 query: {
-                    match: {
-                        ...query
-                    }
+                    match: query
                 }
             }
         })
