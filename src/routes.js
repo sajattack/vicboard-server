@@ -3,7 +3,7 @@ import koaBody from 'koa-body'
 import { v4 as uuid } from 'node-uuid'
 
 const router = koaRouter()
-
+const bodyParser = koaBody()
 
 const threadTemplate = {
     title: 'Awesome Thread',
@@ -25,24 +25,37 @@ export default elasticsSarchClient => {
     /*Threads */
 
     router.get('/threads', function*(next) {
-        this.body = yield elasticsSarchClient.count({
-            index: config.appname
-        })
+
+        this.body = 'test'
     })
 
-    router.post('/thread', koaBody, function*(next) {
-        const { username = 'annon', text = '', catagory = 'issue', cords = [null, null], image = 'https://www.dinafem.org/static/images/site/no-photo.jpg' } = this.request.body
+    router.post('/thread', bodyParser, function*(next) {
 
+
+        return this.body = JSON.stringify(this)
+
+
+        const { username = 'anonymous', title = '', text = '', emoji = 'issue', cords = [null, null], images = [] } = this.request.body
+
+        const id = uuid()
 
         const parms = {
+            comments: [],
             cords,
             text,
-            image,
-            test,
+            emoji,
+            images,
+            title,
             username
         }
 
-        yield elasticsSarchClient.saveThread(catagory, uuid(), parms)
+        elasticsSarchClient.saveThread(parms, id)
+            .then(() => {
+                this.body = JSON.stringify({
+                    status: 'ok',
+                    id
+                })
+            })
     })
 
 

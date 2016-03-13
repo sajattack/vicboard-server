@@ -47,7 +47,8 @@ export default class elasticSearchAbstraction extends elasticClient {
             body
         }, (error, response) => {
             if (error) return reject(error)
-
+                
+            resolve()
         }))
     }
 
