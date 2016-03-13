@@ -45,8 +45,8 @@ export default elasticsSarchClient => {
 
         this.body = yield elasticsSarchClient.search({
             index: 'thread',
-            size: 99999,
             body: {
+                size: 99999,
                 query: {
                     match: query
                 }
