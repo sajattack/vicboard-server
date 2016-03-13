@@ -27,7 +27,7 @@ export default elasticsSarchClient => {
     router.get('/threads', function*(next) {
 
         let query = this.query
-        
+
         this.set('Access-Control-Allow-Origin', '*')
         this.set('Access-Control-Allow-Methods', 'GET')
         this.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
@@ -45,6 +45,7 @@ export default elasticsSarchClient => {
 
         this.body = yield elasticsSarchClient.search({
             index: 'thread',
+            size: 99999,
             body: {
                 query: {
                     match: query
@@ -61,7 +62,7 @@ export default elasticsSarchClient => {
         const emoji_string = emojis(emoji)
         const id = uuid()
 
-        
+
         this.set('Access-Control-Allow-Origin', '*')
         this.set('Access-Control-Allow-Methods', 'GET')
         this.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
