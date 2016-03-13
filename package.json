@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "babel": "babel ./src --out-dir ./dist",
-    "start": "babel-node src/server"
+    "start": "node server.js"
   },
   "bin": {
     "babel-node": "./node_modules/.bin/babel-node"
@@ -20,9 +20,9 @@
     "email": "luigipoole@outlook.com",
     "url": "https://github.com/luigiplr"
   },
-  "license": "MIT",
+  "license": "GPLv3",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/sajattack/vicboard-server/issues"
   },
   "keywords": [],
   "homepage": "",
@@ -35,6 +35,9 @@
     "koa-qs": "^2.0.0",
     "koa-router": "^5.4.0",
     "node-uuid": "^1.4.7"
+  },
+  "engines": {
+    "node": "5.x.x"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
