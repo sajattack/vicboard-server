@@ -23,15 +23,13 @@ export default class elasticSearchAbstraction extends elasticClient {
     initIndexs = (overwrite = false) => {
         const indices = ['thread', 'comments']
 
-        indices.forEach(index => {
-            this.indices.exists({ index }, (err, exsist) => {
-                if (!exsist) {
-                    this.indices.create({ index })
-                } else if (overwrite) {
-                    this.indices.delete({ index }, () => this.indices.create({ index }))
-                }
-            })
-        })
+        indices.forEach(index => this.indices.exists({ index }, (err, exsist) => {
+            if (!exsist) {
+                this.indices.create({ index })
+            } else if (overwrite) {
+                this.indices.delete({ index }, () => this.indices.create({ index }))
+            }
+        }))
     };
 
 
@@ -41,19 +39,16 @@ export default class elasticSearchAbstraction extends elasticClient {
 
     }
 
-    getThread(id, type) {
-        this.get({
+    saveThread({ type, id, body }) {
+        return new Promise((resolve, reject) => this.create({
             index: 'thread',
             type,
-            id
+            id,
+            body
         }, (error, response) => {
-            console.log(error, response)
+            if (error) return reject(error)
 
-        })
-    }
-
-    saveThread(thread) {
-
+        }))
     }
 
     /* Comments */
@@ -64,9 +59,9 @@ export default class elasticSearchAbstraction extends elasticClient {
 
     }
 
-    saveComment(comment) {
+    saveComment(threadID, comment) {
+        return new Promise((resolve, reject) => {
 
-
+        })
     }
-
 }
