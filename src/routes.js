@@ -27,7 +27,10 @@ export default elasticsSarchClient => {
     router.get('/threads', function*(next) {
 
         let query = this.query
-
+        
+        this.set('Access-Control-Allow-Origin', '*')
+        this.set('Access-Control-Allow-Methods', 'GET')
+        this.set('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 
         if (Object.keys(query).length === 0) {
             console.log('wildcard!')
