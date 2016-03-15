@@ -19,7 +19,7 @@ export default elasticsSarchClient => {
     /* index */
 
     router.get('/', function*(next) {
-        this.body = 'You're drunk. Go home.'
+        this.body = "You're drunk. Go home."
     })
 
     /*Threads */
