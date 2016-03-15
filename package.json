@@ -1,5 +1,5 @@
 {
-  "name": "vic-board-server",
+  "name": "vicboard-server",
   "productName": "",
   "version": "0.0.1",
   "description": "",
@@ -19,7 +19,7 @@
     "email": "luigipoole@outlook.com",
     "url": "https://github.com/luigiplr"
   },
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/sajattack/vicboard-server/issues"
   },
